@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Painel de gerenciamento Fantasmas"
+    >
+
+    <title>FANTASMAS</title>
+
+    <!-- FAVICON -->
+    <link
+        rel="icon"
+        type="image/png"
+        href="assets/imagens/favicon.png"
+    >
+
+    <!-- FONTE -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- SUPABASE JS CLIENT (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+    <!-- =====================================================
+         INTRO
+    ====================================================== -->
+
+    <section
+        id="intro-screen"
+        class="screen intro-screen"
+    >
+
+        <div class="intro-vignette" aria-hidden="true"></div>
+        <div class="intro-noise" aria-hidden="true"></div>
+        <div class="intro-scanlines" aria-hidden="true"></div>
+
+        <div class="intro-mark intro-mark-left" aria-hidden="true">✦</div>
+        <div class="intro-mark intro-mark-right" aria-hidden="true">✦</div>
+
+        <div class="intro-content">
+
+            <div class="intro-sigil" aria-hidden="true">F</div>
+
+            <span class="intro-kicker">ARQUIVO FANTASMAS // ACESSO RESTRITO</span>
+
+            <div class="intro-message-wrap">
+
+                <p
+                    id="intro-first-message"
+                    class="intro-message"
+                >
+                    UMA VEZ FANTASMAS...
+                </p>
+
+                <div class="intro-divider" aria-hidden="true"></div>
+
+                <p
+                    id="intro-second-message"
+                    class="intro-message intro-message-danger"
+                >
+                    SEMPRE FANTASMAS!
+                </p>
+
+            </div>
+
+            <span class="intro-footer">NENHUM RASTRO. NENHUMA TESTEMUNHA. NENHUM RETORNO.</span>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         LOGIN / AUTENTICAÇÃO
+    ====================================================== -->
+
+    <main
+        id="auth-screen"
+        class="screen auth-screen hidden"
+    >
+
+        <div class="auth-decoration auth-decoration-top">
+            👻
+        </div>
+
+        <div class="auth-decoration auth-decoration-bottom">
+            🗡️
+        </div>
+
+
+        <!-- =================================================
+             LOGIN
+        ================================================== -->
+
+        <section
+            id="login-panel"
+            class="auth-card"
+        >
+
+            <div class="auth-header">
+
+                <div class="auth-icon">
+                    👻
+                </div>
+
+                <h1>
+                    FANTASMAS
+                </h1>
+
+                <p class="auth-slogan">
+                    QUALQUER MISSÃO, EM QUALQUER LUGAR,
+                    A QUALQUER HORA, DE QUALQUER MANEIRA.
+                </p>
+
+            </div>
+
+
+            <form
+                id="login-form"
+                class="auth-form"
+            >
+
+                <div class="form-group">
+
+                    <label for="login-username">
+                        USUÁRIO
+                    </label>
+
+                    <input
+                        type="text"
+                        id="login-username"
+                        name="username"
+                        placeholder="DIGITE SEU USUÁRIO"
+                        autocomplete="username"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="login-password">
+                        SENHA
+                    </label>
+
+                    <input
+                        type="password"
+                        id="login-password"
+                        name="password"
+                        placeholder="DIGITE SUA SENHA"
+                        autocomplete="current-password"
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="login-button"
+                    class="main-button"
+                >
+                    ENTRAR
+                </button>
+
+
+                <p
+                    id="login-message"
+                    class="form-message"
+                ></p>
+
+            </form>
+
+
+            <div class="auth-divider">
+
+                <span></span>
+
+                <p>
+                    OU
+                </p>
+
+                <span></span>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="show-register"
+                class="secondary-button"
+            >
+                CRIAR CONTA
+            </button>
+
+        </section>
+
+
+        <!-- =================================================
+             CRIAR CONTA
+        ================================================== -->
+
+        <section
+            id="register-panel"
+            class="auth-card hidden"
+        >
+
+            <div class="auth-header">
+
+                <div class="auth-icon">
+                    👻
+                </div>
+
+                <h1>
+                    CRIAR CONTA
+                </h1>
+
+                <p class="auth-subtitle">
+                    ENTRE PARA A ORGANIZAÇÃO DOS FANTASMAS.
+                </p>
+
+            </div>
+
+
+            <form
+                id="register-form"
+                class="auth-form"
+            >
+
+                <div class="form-group">
+
+                    <label for="register-username">
+                        USUÁRIO
+                    </label>
+
+                    <input
+                        type="text"
+                        id="register-username"
+                        name="username"
+                        placeholder="MÍNIMO DE 4 CARACTERES"
+                        autocomplete="username"
+                    >
+
+                    <small
+                        id="register-username-error"
+                        class="field-error"
+                    ></small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="register-password">
+                        SENHA
+                    </label>
+
+                    <input
+                        type="password"
+                        id="register-password"
+                        name="password"
+                        placeholder="MÍNIMO DE 4 CARACTERES"
+                        autocomplete="new-password"
+                    >
+
+                    <small
+                        id="register-password-error"
+                        class="field-error"
+                    ></small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="register-password-confirm">
+                        CONFIRMAR SENHA
+                    </label>
+
+                    <input
+                        type="password"
+                        id="register-password-confirm"
+                        name="passwordConfirm"
+                        placeholder="CONFIRME SUA SENHA"
+                        autocomplete="new-password"
+                    >
+
+                    <small
+                        id="register-confirm-error"
+                        class="field-error"
+                    ></small>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="register-button"
+                    class="main-button"
+                >
+                    CRIAR CONTA
+                </button>
+
+
+                <p
+                    id="register-message"
+                    class="form-message"
+                ></p>
+
+            </form>
+
+
+            <button
+                type="button"
+                id="show-login"
+                class="back-button"
+            >
+                ← VOLTAR PARA LOGIN
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         PAINEL PRINCIPAL
+    ====================================================== -->
+
+    <div
+        id="app"
+        class="app hidden"
+    >
+
+        <!-- ================================================
+             MOBILE HEADER
+        ================================================= -->
+
+        <header class="mobile-header">
+
+            <button
+                type="button"
+                id="mobile-menu-button"
+                class="mobile-menu-button"
+                aria-label="Abrir menu"
+            >
+                ☰
+            </button>
+
+
+            <div class="mobile-logo">
+                👻 FANTASMAS
+            </div>
+
+
+            <button
+                type="button"
+                id="mobile-profile-button"
+                class="mobile-profile-button"
+                aria-label="Perfil"
+            >
+                👤
+            </button>
+
+        </header>
+
+
+        <!-- ================================================
+             SIDEBAR
+        ================================================= -->
+
+        <aside
+            id="sidebar"
+            class="sidebar"
+        >
+
+            <div class="sidebar-header">
+
+                <div class="sidebar-logo">
+                    👻
+                </div>
+
+                <div>
+
+                    <h2>
+                        FANTASMAS
+                    </h2>
+
+                    <span>
+                        PAINEL DE CONTROLE
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <nav
+                class="sidebar-navigation"
+                aria-label="Menu principal"
+            >
+
+                <!-- PAINEL GERAL -->
+
+                <button
+                    type="button"
+                    class="menu-item active"
+                    data-page="dashboard"
+                >
+
+                    <span class="menu-icon">
+                        👋
+                    </span>
+
+                    <span>
+                        PAINEL GERAL
+                    </span>
+
+                </button>
+
+
+                <!-- BFE -->
+
+                <div class="menu-section">
+
+                    <div class="menu-section-title">
+                        👻 BFE
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="bfe-members"
+                    >
+                        ADICIONAR MEMBRO
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="bfe-hierarchy"
+                    >
+                        HIERARQUIA
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="bfe-daily"
+                    >
+                        COTA DIÁRIA
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="bfe-weekly"
+                    >
+                        COTA SEMANAL
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="bfe-ghosts"
+                    >
+                        FANTASMAS EM TESTE
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="bfe-punishments"
+                    >
+                        PUNIÇÃO
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="bfe-warnings"
+                    >
+                        ADVERTÊNCIA
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="bfe-inactivity"
+                    >
+                        INATIVIDADE
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="bfe-training"
+                    >
+                        TREINOS
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="bfe-evaluation"
+                    >
+                        AVAL
+                    </button>
+
+                </div>
+
+
+                <!-- SGB -->
+
+                <div class="menu-section">
+
+                    <div class="menu-section-title">
+                        🕵️ SGB
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="sgb-members"
+                    >
+                        ADICIONAR MEMBRO
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="sgb-hierarchy"
+                    >
+                        HIERARQUIA
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="sgb-evaluation"
+                    >
+                        AVAL
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="sgb-weekly"
+                    >
+                        COTA SEMANAL
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="sgb-warnings"
+                    >
+                        ADVERTÊNCIA
+                    </button>
+
+                </div>
+
+
+                <!-- JORNAL -->
+
+                <div class="menu-section">
+
+                    <div class="menu-section-title">
+                        📰 JORNAL
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="jornal-members"
+                    >
+                        ADICIONAR MEMBRO
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="jornal-hierarchy"
+                    >
+                        HIERARQUIA
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="jornal-daily"
+                    >
+                        COTA DIÁRIA
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="jornal-weekly"
+                    >
+                        COTA SEMANAL
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="jornal-evaluation"
+                    >
+                        AVAL
+                    </button>
+
+                </div>
+
+
+                <!-- LOGS -->
+
+                <div class="menu-section">
+
+                    <button
+                        type="button"
+                        class="menu-item"
+                        data-page="logs"
+                    >
+
+                        <span class="menu-icon">
+                            📁
+                        </span>
+
+                        LOGS
+
+                    </button>
+
+                </div>
+
+            </nav>
+
+
+            <!-- SIDEBAR FOOTER -->
+
+            <div class="sidebar-footer">
+
+                <div class="current-user">
+
+                    <div class="current-user-icon">
+                        👤
+                    </div>
+
+                    <div class="current-user-info">
+
+                        <strong id="current-user-name">
+                            USUÁRIO
+                        </strong>
+
+                        <span>
+                            ONLINE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="logout-button"
+                    class="logout-button"
+                >
+                    SAIR
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================================================
+             OVERLAY MOBILE
+        ================================================= -->
+
+        <div
+            id="sidebar-overlay"
+            class="sidebar-overlay hidden"
+        ></div>
+
+
+        <!-- ================================================
+             CONTEÚDO
+        ================================================= -->
+
+        <main class="main-content">
+
+            <!-- HEADER DESKTOP -->
+
+            <header class="main-header">
+
+                <div>
+
+                    <span
+                        id="page-breadcrumb"
+                        class="page-breadcrumb"
+                    >
+                        PAINEL GERAL
+                    </span>
+
+                    <h1
+                        id="page-title"
+                        class="page-title"
+                    >
+                        PAINEL GERAL 👋
+                    </h1>
+
+                </div>
+
+
+                <div class="header-actions">
+
+                    <div class="header-status">
+
+                        <span class="status-dot"></span>
+
+                        SISTEMA ONLINE
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="header-profile-button"
+                        class="profile-button"
+                    >
+                        👤
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- ============================================
+                 PÁGINAS
+            ============================================= -->
+
+
+            <!-- DASHBOARD -->
+
+            <section
+                id="page-dashboard"
+                class="page active-page"
+                data-page-content="dashboard"
+            >
+
+                <div class="welcome-area">
+
+                    <p class="welcome-label">
+                        BEM-VINDO, FANTASMA.
+                    </p>
+
+                    <h2>
+                        PAINEL GERAL
+                    </h2>
+
+                    <p>
+                        SELECIONE UM DEPARTAMENTO PARA
+                        ACESSAR SUAS INFORMAÇÕES.
+                    </p>
+
+                </div>
+
+
+                <!-- DEPARTAMENTOS -->
+
+                <div class="dashboard-grid">
+
+                    <!-- BFE -->
+
+                    <button
+                        type="button"
+                        class="dashboard-card department-card"
+                        data-page="bfe"
+                    >
+
+                        <img
+                            class="department-card-image"
+                            src="assets/imagens/bfe.png"
+                            alt="BFE"
+                        >
+
+                        <span class="department-card-overlay"></span>
+
+                        <span class="card-decoration">
+                            👻
+                        </span>
+
+                        <span class="card-content">
+
+                            <span class="card-title">
+                                BFE
+                            </span>
+
+                            <span class="card-description">
+                                BATALHÃO DE FORÇAS ESPECIAIS
+                            </span>
+
+                        </span>
+
+                        <span class="card-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                    <!-- SGB -->
+
+                    <button
+                        type="button"
+                        class="dashboard-card department-card"
+                        data-page="sgb"
+                    >
+
+                        <img
+                            class="department-card-image"
+                            src="assets/imagens/sgb.png"
+                            alt="SGB"
+                        >
+
+                        <span class="department-card-overlay"></span>
+
+                        <span class="card-decoration">
+                            🕵️
+                        </span>
+
+                        <span class="card-content">
+
+                            <span class="card-title">
+                                SGB
+                            </span>
+
+                            <span class="card-description">
+                                SETOR DE GESTÃO
+                            </span>
+
+                        </span>
+
+                        <span class="card-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                    <!-- JORNAL -->
+
+                    <button
+                        type="button"
+                        class="dashboard-card department-card"
+                        data-page="jornal"
+                    >
+
+                        <img
+                            class="department-card-image"
+                            src="assets/imagens/jornal.png"
+                            alt="JORNAL"
+                        >
+
+                        <span class="department-card-overlay"></span>
+
+                        <span class="card-decoration">
+                            📰
+                        </span>
+
+                        <span class="card-content">
+
+                            <span class="card-title">
+                                JORNAL
+                            </span>
+
+                            <span class="card-description">
+                                JORNAL DOS FANTASMAS
+                            </span>
+
+                        </span>
+
+                        <span class="card-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+                <!-- CONTADORES -->
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span>
+                            VISÃO GERAL
+                        </span>
+
+                        <h2>
+                            MEMBROS
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="members-grid">
+
+                    <!-- BFE -->
+
+                    <button
+                        type="button"
+                        class="dashboard-card member-card"
+                        data-page="bfe-members"
+                    >
+
+                        <span class="member-card-icon">
+                            👥
+                        </span>
+
+                        <span class="member-card-content">
+
+                            <span class="member-card-label">
+                                MEMBROS - BFE
+                            </span>
+
+                            <strong
+                                id="bfe-member-count"
+                                class="member-count"
+                            >
+                                0
+                            </strong>
+
+                        </span>
+
+                    </button>
+
+
+                    <!-- SGB -->
+
+                    <button
+                        type="button"
+                        class="dashboard-card member-card"
+                        data-page="sgb-members"
+                    >
+
+                        <span class="member-card-icon">
+                            👥
+                        </span>
+
+                        <span class="member-card-content">
+
+                            <span class="member-card-label">
+                                MEMBROS - SGB
+                            </span>
+
+                            <strong
+                                id="sgb-member-count"
+                                class="member-count"
+                            >
+                                0
+                            </strong>
+
+                        </span>
+
+                    </button>
+
+
+                    <!-- JORNAL -->
+
+                    <button
+                        type="button"
+                        class="dashboard-card member-card"
+                        data-page="jornal-members"
+                    >
+
+                        <span class="member-card-icon">
+                            👥
+                        </span>
+
+                        <span class="member-card-content">
+
+                            <span class="member-card-label">
+                                MEMBROS - JORNAL
+                            </span>
+
+                            <strong
+                                id="jornal-member-count"
+                                class="member-count"
+                            >
+                                0
+                            </strong>
+
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- BFE -->
+
+            <section
+                id="page-bfe"
+                class="page"
+                data-page-content="bfe"
+            >
+
+                <div class="department-page">
+
+                    <span class="department-icon">
+                        👻
+                    </span>
+
+                    <h2>
+                        BFE
+                    </h2>
+
+                    <p>
+                        SELECIONE UMA OPÇÃO NO MENU.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- SGB -->
+
+            <section
+                id="page-sgb"
+                class="page"
+                data-page-content="sgb"
+            >
+
+                <div class="department-page">
+
+                    <span class="department-icon">
+                        🕵️
+                    </span>
+
+                    <h2>
+                        SGB
+                    </h2>
+
+                    <p>
+                        SELECIONE UMA OPÇÃO NO MENU.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- JORNAL -->
+
+            <section
+                id="page-jornal"
+                class="page"
+                data-page-content="jornal"
+            >
+
+                <div class="department-page">
+
+                    <span class="department-icon">
+                        📰
+                    </span>
+
+                    <h2>
+                        JORNAL
+                    </h2>
+
+                    <p>
+                        SELECIONE UMA OPÇÃO NO MENU.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ============================================
+                 PÁGINAS DOS MÓDULOS
+            ============================================= -->
+
+
+            <!-- BFE -->
+
+            <section
+                id="page-bfe-members"
+                class="page"
+                data-page-content="bfe-members"
+            ></section>
+
+
+            <section
+                id="page-bfe-hierarchy"
+                class="page"
+                data-page-content="bfe-hierarchy"
+            ></section>
+
+
+            <section
+                id="page-bfe-daily"
+                class="page"
+                data-page-content="bfe-daily"
+            ></section>
+
+
+            <section
+                id="page-bfe-weekly"
+                class="page"
+                data-page-content="bfe-weekly"
+            ></section>
+
+
+            <section
+                id="page-bfe-ghosts"
+                class="page"
+                data-page-content="bfe-ghosts"
+            ></section>
+
+
+            <section
+                id="page-bfe-punishments"
+                class="page"
+                data-page-content="bfe-punishments"
+            ></section>
+
+
+            <section
+                id="page-bfe-warnings"
+                class="page"
+                data-page-content="bfe-warnings"
+            ></section>
+
+
+            <section
+                id="page-bfe-inactivity"
+                class="page"
+                data-page-content="bfe-inactivity"
+            ></section>
+
+
+            <section
+                id="page-bfe-training"
+                class="page"
+                data-page-content="bfe-training"
+            ></section>
+
+
+            <section
+                id="page-bfe-evaluation"
+                class="page"
+                data-page-content="bfe-evaluation"
+            ></section>
+
+
+            <!-- SGB -->
+
+            <section
+                id="page-sgb-members"
+                class="page"
+                data-page-content="sgb-members"
+            ></section>
+
+
+            <section
+                id="page-sgb-hierarchy"
+                class="page"
+                data-page-content="sgb-hierarchy"
+            ></section>
+
+
+            <section
+                id="page-sgb-evaluation"
+                class="page"
+                data-page-content="sgb-evaluation"
+            ></section>
+
+
+            <section
+                id="page-sgb-weekly"
+                class="page"
+                data-page-content="sgb-weekly"
+            ></section>
+
+
+            <section
+                id="page-sgb-warnings"
+                class="page"
+                data-page-content="sgb-warnings"
+            ></section>
+
+
+            <!-- JORNAL -->
+
+            <section
+                id="page-jornal-members"
+                class="page"
+                data-page-content="jornal-members"
+            ></section>
+
+
+            <section
+                id="page-jornal-hierarchy"
+                class="page"
+                data-page-content="jornal-hierarchy"
+            ></section>
+
+
+            <section
+                id="page-jornal-daily"
+                class="page"
+                data-page-content="jornal-daily"
+            ></section>
+
+
+            <section
+                id="page-jornal-weekly"
+                class="page"
+                data-page-content="jornal-weekly"
+            ></section>
+
+
+            <section
+                id="page-jornal-evaluation"
+                class="page"
+                data-page-content="jornal-evaluation"
+            ></section>
+
+
+            <!-- LOGS -->
+
+            <section
+                id="page-logs"
+                class="page"
+                data-page-content="logs"
+            ></section>
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         MODAL GLOBAL
+    ====================================================== -->
+
+    <div
+        id="global-modal"
+        class="modal hidden"
+        aria-hidden="true"
+    >
+
+        <div class="modal-overlay"></div>
+
+        <div class="modal-content">
+
+            <button
+                type="button"
+                id="modal-close"
+                class="modal-close"
+                aria-label="Fechar"
+            >
+                ×
+            </button>
+
+            <div id="modal-body"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TOAST / NOTIFICAÇÕES
+    ====================================================== -->
+
+    <div
+        id="toast-container"
+        class="toast-container"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+<script src="supabase.js"></script>
+<script src="script.js"></script>
+
+</body>
+
+</html>
